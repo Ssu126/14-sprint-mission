@@ -1,36 +1,36 @@
 package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.Channel;
+import com.sprint.mission.discodeit.repository.ChannelRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
+import lombok.AllArgsConstructor;
 
 import java.util.*;
 
+@AllArgsConstructor
 public class JCFChannelService implements ChannelService {
-    private final Map<UUID, Channel> data = new HashMap<>();
+    private final ChannelRepository cRepository;
 
     @Override
     public Channel create(Channel entity) {
-        data.put(entity.getId(), entity);
-
-        return entity;
+        return cRepository.save(entity);
     }
     @Override
     public Channel read(UUID id) {
-        return data.get(id);
+        return cRepository.read(id);
     }
     @Override
     public List<Channel> rAll() {
-        return new ArrayList<>(data.values());
+        return cRepository.rAll();
     }
     @Override
     public Channel update(Channel entity, String cName) {
         entity.update(cName);
-        data.put(entity.getId(), entity);
 
-        return entity;
+        return cRepository.save(entity);
     }
     @Override
     public void delete(UUID id) {
-        data.remove(id);
+        cRepository.delete(id);
     }
 }

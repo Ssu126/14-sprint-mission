@@ -1,21 +1,19 @@
 package com.sprint.mission.discodeit.service.jcf;
 
 import com.sprint.mission.discodeit.entity.Message;
+import com.sprint.mission.discodeit.repository.MessageRepository;
 import com.sprint.mission.discodeit.service.ChannelService;
 import com.sprint.mission.discodeit.service.MessageService;
 import com.sprint.mission.discodeit.service.UserService;
+import lombok.AllArgsConstructor;
 
 import java.util.*;
 
+@AllArgsConstructor
 public class JCFMessageService implements MessageService {
-    private final Map<UUID, Message> data = new HashMap<>();
-    private UserService uService;
-    private ChannelService cService;
-
-    public JCFMessageService(UserService uService, ChannelService cService) {
-        this.uService = uService;
-        this.cService = cService;
-    }
+    private final MessageRepository mRepository;
+    private final UserService uService;
+    private final ChannelService cService;
 
     @Override
     public Message create(Message entity) {
@@ -25,27 +23,24 @@ public class JCFMessageService implements MessageService {
         if(cService.read(entity.getChannelId()) == null) {
             throw new IllegalArgumentException("존재하지 않는 ChannelId : " + entity.getChannelId());
         }
-        data.put(entity.getId(), entity);
-
-        return entity;
+        return mRepository.save(entity);
     }
     @Override
     public Message read(UUID id) {
-        return data.get(id);
+        return mRepository.read(id);
     }
     @Override
     public List<Message> rAll() {
-        return new ArrayList<>(data.values());
+        return mRepository.rAll();
     }
     @Override
     public Message update(Message entity, String mName) {
         entity.update(mName);
-        data.put(entity.getId(), entity);
 
-        return entity;
+        return mRepository.save(entity);
     }
     @Override
     public void delete(UUID id) {
-        data.remove(id);
+        mRepository.delete(id);
     }
 }
