@@ -1,23 +1,30 @@
 package com.sprint.mission.discodeit.entity;
 
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
 import java.util.UUID;
 
+@Getter
+@ToString
+@RequiredArgsConstructor
 public class Message extends Base {
     private String mName;
+    private UUID userId;
+    private UUID channelId;
 
-    public Message(String mName) {
+    public Message(String mName, UUID userId, UUID channelId) {
         super();
         this.mName = mName;
-    }
-    public String getMName() {
-        return mName;
+        this.userId = userId;
+        this.channelId = channelId;
     }
     public void update(String mName) {
         this.mName = mName;
         this.updateTimeStamp();
     }
-    public String toString() {
-        return String.format("Message(id=%s, mName=%s, createAt=%d, updateAt=%d)",
-                id, mName, createdAt, updatedAt);
+    private void updateTimeStamp() {
+        this.updatedAt = System.currentTimeMillis();
     }
 }

@@ -10,11 +10,13 @@ import com.sprint.mission.discodeit.service.jcf.JCFChannelService;
 import com.sprint.mission.discodeit.service.jcf.JCFUserService;
 import com.sprint.mission.discodeit.service.jcf.JCFMessageService;
 
+import java.util.UUID;
+
 public class JavaApplication {
     public static void main(String[] args) {
         UserService uService = new JCFUserService();
         ChannelService cService = new JCFChannelService();
-        MessageService mService = new JCFMessageService();
+        MessageService mService = new JCFMessageService(uService, cService);
 
         System.out.println("객체 생성");
         User user1 = new User("User1");
@@ -23,8 +25,8 @@ public class JavaApplication {
         Channel channel1 = new Channel("Channel1");
         Channel channel2 = new Channel("Channel2");
 
-        Message message1 = new Message("Message1");
-        Message message2 = new Message("Message2");
+        Message message1 = new Message("Message1", user1.getId(), channel1.getId());
+        Message message2 = new Message("Message2", user2.getId(), channel1.getId());
 
         System.out.println("\n--등록--");
         uService.create(user1);
@@ -64,5 +66,11 @@ public class JavaApplication {
         System.out.println("user2 삭제된 데이터 조회: " + uService.read(user2.getId()));
         System.out.println("channel2 삭제된 데이터 조회: " + cService.read(channel2.getId()));
         System.out.println("message2 삭제된 데이터 조회: " + mService.read(message2.getId()));
+
+
+        System.out.println("--에외처리 기능 점검--");
+        //User에 예외 값이 들어간 경우
+        Message message3 = new Message("Message3", UUID.randomUUID(), channel1.getId());
+        mService.create(message3);
     }
 }
