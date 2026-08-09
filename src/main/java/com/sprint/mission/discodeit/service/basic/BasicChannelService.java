@@ -25,7 +25,7 @@ public class BasicChannelService implements ChannelService {
     @Override
     public Channel find(UUID channelId) {
         return channelRepository.findById(channelId)
-                        .orElseThrow(() -> new NoSuchElementException("Channel with id " + channelId + " not found"));
+            .orElseThrow(() -> new NoSuchElementException("Channel with id " + channelId + " not found"));
     }
 
     @Override
@@ -36,7 +36,7 @@ public class BasicChannelService implements ChannelService {
     @Override
     public Channel update(UUID channelId, String newName, String newDescription) {
         Channel channel = channelRepository.findById(channelId)
-                .orElseThrow(() -> new NoSuchElementException("Channel with id " + channelId + " not found"));
+            .orElseThrow(() -> new NoSuchElementException("Channel with id " + channelId + " not found"));
         channel.update(newName, newDescription);
         return channelRepository.save(channel);
     }

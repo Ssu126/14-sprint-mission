@@ -67,7 +67,7 @@ public class BasicUserService implements UserService {
     @Override
     public UserResponse update(UUID userId, UserUpdateRequest request) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
+            .orElseThrow(() -> new NoSuchElementException("User with id " + userId + " not found"));
 
         if(request.getProfileImageId() != null) {
             boolean imageExist = binaryContentRepository.findById(request.getProfileImageId()).isPresent();

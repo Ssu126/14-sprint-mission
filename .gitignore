@@ -3,29 +3,15 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-<<<<<<< HEAD
 
 ### IntelliJ IDEA ###
 .idea
-=======
-.kotlin
-
-### IntelliJ IDEA ###
-.idea/modules.xml
-.idea/jarRepositories.xml
-.idea/compiler.xml
-.idea/libraries/
->>>>>>> upstream/김수영
 *.iws
 *.iml
 *.ipr
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
-<<<<<<< HEAD
-=======
-.idea
->>>>>>> upstream/김수영
 
 ### Eclipse ###
 .apt_generated

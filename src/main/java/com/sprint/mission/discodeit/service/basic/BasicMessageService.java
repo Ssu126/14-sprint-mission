@@ -35,7 +35,7 @@ public class BasicMessageService implements MessageService {
     @Override
     public Message find(UUID messageId) {
         return messageRepository.findById(messageId)
-                .orElseThrow(() -> new NoSuchElementException("Message with id " + messageId + " not found"));
+            .orElseThrow(() -> new NoSuchElementException("Message with id " + messageId + " not found"));
     }
 
     @Override
@@ -46,7 +46,7 @@ public class BasicMessageService implements MessageService {
     @Override
     public Message update(UUID messageId, String newContent) {
         Message message = messageRepository.findById(messageId)
-                .orElseThrow(() -> new NoSuchElementException("Message with id " + messageId + " not found"));
+            .orElseThrow(() -> new NoSuchElementException("Message with id " + messageId + " not found"));
         message.update(newContent);
         return messageRepository.save(message);
     }
