@@ -14,7 +14,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class DiscodeitApplication {
 	static User setupUser(UserService userService) {
-		return userService.create("woody", "woody@codeit.com", "woody1234");
+		return userService.create();
 	}
 
 	static Channel setupChannel(ChannelService channelService) {
