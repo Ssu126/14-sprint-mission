@@ -4,6 +4,7 @@ import com.sprint.mission.discodeit.entity.Message;
 import com.sprint.mission.discodeit.repository.MessageRepository;
 
 import java.io.*;
+<<<<<<< HEAD
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -81,10 +82,41 @@ public class FileMessageRepository implements MessageRepository {
                     .toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
+=======
+import java.util.*;
+
+public class FileMessageRepository implements MessageRepository {
+    private final String fileName = "messages.ser";
+    private final Map<UUID, Message> fileMap = findMap();
+
+    private Map<UUID, Message> findMap() {
+        File file = new File(fileName);
+
+        if(!file.exists()) {
+            return new HashMap<>();
+        }
+
+        try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file))) {
+            Map<UUID, Message> loadedMap = (Map<UUID, Message>) ois.readObject();
+
+            return loadedMap;
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+            return new HashMap<>();
+        }
+    }
+
+    public void saveMapToFile(Map<UUID, Message> map) {
+        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(fileName))) {
+            oos.writeObject(map);
+        } catch (IOException e) {
+            e.printStackTrace();
+>>>>>>> upstream/김수영
         }
     }
 
     @Override
+<<<<<<< HEAD
     public boolean existsById(UUID id) {
         Path path = resolvePath(id);
         return Files.exists(path);
@@ -98,5 +130,25 @@ public class FileMessageRepository implements MessageRepository {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+=======
+    public Message save(Message entity) {
+        fileMap.put(entity.getId(), entity);
+        saveMapToFile(fileMap);
+
+        return fileMap.get(entity.getId());
+    }
+    @Override
+    public Message read(UUID id) {
+        return fileMap.get(id);
+    }
+    @Override
+    public List<Message> rAll() {
+        return new ArrayList<>(fileMap.values());
+    }
+    @Override
+    public void delete(UUID id) {
+        fileMap.remove(id);
+        saveMapToFile(fileMap);
+>>>>>>> upstream/김수영
     }
 }
